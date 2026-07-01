@@ -10,7 +10,8 @@ export const checkCoherenceCapability = {
     proposed_narrative: z.string().describe('The narrative or conclusion the agent wishes to commit.'),
     session_id: z.string().optional()
   }),
-  run: async (args: { project_name: string, proposed_narrative: string, session_id?: string }) => {
+  run: async (params: any) => {
+    const args = params.args as { project_name: string, proposed_narrative: string, session_id?: string };
     try {
       const response = await fetch(`${COGNEE_API_URL}/coherence`, {
         method: 'POST',
@@ -18,7 +19,8 @@ export const checkCoherenceCapability = {
         body: JSON.stringify(args)
       });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return await response.json();
+      const json = await response.json();
+      return JSON.stringify(json);
     } catch (error) {
       console.error("Coherence Check Error:", error);
       throw new Error(`Failed to check coherence: ${error instanceof Error ? error.message : String(error)}`);

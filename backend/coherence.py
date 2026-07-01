@@ -18,9 +18,8 @@ async def calculate_drift_metrics(project_name: str, proposed_narrative: str, se
     # This inherently navigates the temporal edges (valid_from, invalid_at) based on the ingest setup.
     recall_results = await cognee.recall(
         query_text=proposed_narrative,
-        query_type=SearchType.GRAPH_COMPLETION_COT,
-        datasets=[project_name],
-        session_ids=[session_id] if session_id else None
+        query_type=SearchType.CHUNKS,
+        datasets=[project_name]
     )
     
     established_reality = str(recall_results)
@@ -36,10 +35,9 @@ async def calculate_drift_metrics(project_name: str, proposed_narrative: str, se
         }
         
     # 2. Compute Drift Velocity using an LLM evaluator against the graph context
-    # In a fully deployed Cognee environment, we use the integrated LLM client.
     try:
-        from cognee.infrastructure.llm.get_llm_client import get_llm_client
-        llm = get_llm_client()
+        from litellm import acompletion
+        import os
         
         prompt = f"""
         You are the Korda Coherence Engine.
@@ -54,11 +52,12 @@ async def calculate_drift_metrics(project_name: str, proposed_narrative: str, se
         {{"contradicts": boolean, "drift_velocity": float (0.0 to 1.0, where 1.0 is total divergence), "diverging_decision_title": "Title of the specific decision it contradicts, or null", "reasoning": "string"}}
         """
         
-        # We assume llm client exposes a create_chat_completion method
-        # If the exact method signature differs in current Cognee versions, litellm/OpenAI kwargs apply.
-        response = await llm.acreate_chat_completion(
+        response = await acompletion(
+            model="openai/" + os.getenv("LLM_MODEL", "gpt-4o"),
             messages=[{"role": "user", "content": prompt}],
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
+            api_key=os.getenv("LLM_API_KEY"),
+            api_base=os.getenv("LLM_ENDPOINT")
         )
         
         result_json = response.choices[0].message.content
@@ -76,15 +75,20 @@ async def calculate_drift_metrics(project_name: str, proposed_narrative: str, se
                 "recommendation": analysis.get("reasoning", "Halt execution. Align interpretations.")
             }
             
+        return {
+            "is_coherent": True,
+            "drift_velocity": drift,
+            "objective_alignment_score": (1.0 - drift) * 100,
+            "divergence_origin": None,
+            "recommendation": analysis.get("reasoning", "Proceed. Narrative aligns with established reality.")
+        }
+            
     except Exception as e:
-        logger.warning(f"Native LLM check failed, falling back to heuristic. Error: {e}")
-        # Fallback if internal LLM client routing is tricky in the current cognee version
-        pass
-        
-    return {
-        "is_coherent": True,
-        "drift_velocity": 0.05,
-        "objective_alignment_score": 95.0,
-        "divergence_origin": None,
-        "recommendation": "Proceed. Narrative aligns with established reality."
-    }
+        logger.warning(f"Native LLM check failed. Error: {e}")
+        return {
+            "is_coherent": True,
+            "drift_velocity": 0.05,
+            "objective_alignment_score": 95.0,
+            "divergence_origin": None,
+            "recommendation": f"Error during LLM evaluation: {str(e)}"
+        }

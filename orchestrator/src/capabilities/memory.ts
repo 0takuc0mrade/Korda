@@ -10,7 +10,8 @@ export const ingestMemoryCapability = {
     artifact_type: z.enum(['ADR', 'SlackTranscript', 'PR', 'Documentation']).describe('The ontological type of the artifact.'),
     content: z.string().describe('The raw text content to be ingested and graphed.')
   }),
-  run: async (args: { project_name: string, artifact_type: string, content: string }) => {
+  run: async (params: any) => {
+    const args = params.args as { project_name: string, artifact_type: string, content: string };
     try {
       const response = await fetch(`${COGNEE_API_URL}/ingest`, {
         method: 'POST',
@@ -18,7 +19,8 @@ export const ingestMemoryCapability = {
         body: JSON.stringify(args)
       });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return await response.json();
+      const json = await response.json();
+      return JSON.stringify(json);
     } catch (error) {
       console.error("Memory Ingestion Error:", error);
       throw new Error(`Failed to ingest memory: ${error instanceof Error ? error.message : String(error)}`);
@@ -37,7 +39,8 @@ export const queryMemoryCapability = {
     only_context: z.boolean().optional().describe('Set to true to bypass Cognee LLM synthesis and return raw topology for OpenServ agents to reason over locally.'),
     node_type: z.string().optional().describe('Optional topological filter for node types.')
   }),
-  run: async (args: { project_name: string, query: string, user_id?: string, session_id?: string, only_context?: boolean, node_type?: string }) => {
+  run: async (params: any) => {
+    const args = params.args as { project_name: string, query: string, user_id?: string, session_id?: string, only_context?: boolean, node_type?: string };
     try {
       const payload = {
         ...args,
@@ -49,7 +52,8 @@ export const queryMemoryCapability = {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return await response.json();
+      const json = await response.json();
+      return JSON.stringify(json);
     } catch (error) {
       console.error("Memory Query Error:", error);
       throw new Error(`Failed to query memory: ${error instanceof Error ? error.message : String(error)}`);
@@ -64,7 +68,8 @@ export const evolveMemoryCapability = {
     project_name: z.string().describe('The isolated tenant/project dataset identifier.'),
     session_id: z.string().optional().describe('Optional session ID if evolving a specific transient conversation into persistent memory.')
   }),
-  run: async (args: { project_name: string, session_id?: string }) => {
+  run: async (params: any) => {
+    const args = params.args as { project_name: string, session_id?: string };
     try {
       const response = await fetch(`${COGNEE_API_URL}/improve`, {
         method: 'POST',
@@ -72,7 +77,8 @@ export const evolveMemoryCapability = {
         body: JSON.stringify(args)
       });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return await response.json();
+      const json = await response.json();
+      return JSON.stringify(json);
     } catch (error) {
       console.error("Memory Evolution Error:", error);
       throw new Error(`Failed to evolve memory: ${error instanceof Error ? error.message : String(error)}`);

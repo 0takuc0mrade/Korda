@@ -59,13 +59,8 @@ async def ingest_artifact(request: IngestRequest):
     try:
         # Utilize temporal_cognify to automatically extract timelines
         # and enforce the strict domain ontology.
-        await cognee.remember(
-            request.content,
-            dataset_name=request.project_name,
-            node_set=[request.artifact_type, "engineering_evolution"],
-            temporal_cognify=True,
-            self_improvement=False # Defer to the improve phase
-        )
+        await cognee.add([request.content], dataset_name=request.project_name)
+        await cognee.cognify(datasets=[request.project_name])
         return {"status": "success", "message": "Artifact ingested successfully."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

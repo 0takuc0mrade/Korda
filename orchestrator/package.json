@@ -9,12 +9,12 @@
     "dev": "tsc --watch & node dist/agent.js"
   },
   "dependencies": {
-    "@openserv-labs/sdk": "^0.1.0",
-    "zod": "^3.22.4",
-    "dotenv": "^16.4.5"
+    "@openserv-labs/sdk": "^2.4.1",
+    "dotenv": "^16.4.5",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "typescript": "^5.3.3",
-    "@types/node": "^20.11.0"
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
   }
 }

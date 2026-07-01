@@ -12,15 +12,14 @@ You are connected to the Cognee Memory Plane. Do NOT hallucinate.
 If asked to recall a past state, ALWAYS use the 'query_memory' capability first.
 If asked to learn a new architecture or decision, ALWAYS use the 'ingest_memory' capability.
 If told that a decision supersedes another, trigger the 'evolve_memory' capability.
-You utilize Bounded Reasoning. Your outputs are synchronized via the MAR middleware to prevent semantic drift.`,
-  // The OpenServ framework allows adding explicit capabilities.
-  capabilities: [
-    ingestMemoryCapability,
-    queryMemoryCapability,
-    evolveMemoryCapability,
-    checkCoherenceCapability
-  ]
+You utilize Bounded Reasoning. Your outputs are synchronized via the MAR middleware to prevent semantic drift.`
 });
+
+// Add capabilities individually per OpenServ v2+ SDK
+kordaAgent.addCapability(ingestMemoryCapability);
+kordaAgent.addCapability(queryMemoryCapability);
+kordaAgent.addCapability(evolveMemoryCapability);
+kordaAgent.addCapability(checkCoherenceCapability);
 
 // A mock function demonstrating the Multi-Agent workflow:
 export async function executeEngineeringAnalysisTask(projectName: string, question: string) {
@@ -33,11 +32,14 @@ export async function executeEngineeringAnalysisTask(projectName: string, questi
   // For demonstration, we directly invoke the capability
   let queryResult;
   try {
-    queryResult = await queryMemoryCapability.run({
-      project_name: projectName,
-      query: question,
-      only_context: false
-    });
+    const rawResult = await queryMemoryCapability.run({
+      args: {
+        project_name: projectName,
+        query: question,
+        only_context: false
+      }
+    } as any);
+    queryResult = JSON.parse(rawResult);
   } catch (e) {
     console.error("[Orchestrator] Memory connection failed. Check if FastAPI is running.", e);
     return;
@@ -50,10 +52,13 @@ export async function executeEngineeringAnalysisTask(projectName: string, questi
   // 3. Reality Coherence Layer: Validate the narrative before syncing
   console.log(`[Orchestrator] Validating narrative coherence...`);
   try {
-    const coherenceCheck = await checkCoherenceCapability.run({
-      project_name: projectName,
-      proposed_narrative: conclusion
-    });
+    const rawCoherence = await checkCoherenceCapability.run({
+      args: {
+        project_name: projectName,
+        proposed_narrative: conclusion
+      }
+    } as any);
+    const coherenceCheck = JSON.parse(rawCoherence);
     
     console.log(`[Coherence Monitor] Score: ${coherenceCheck.data.objective_alignment_score}, Drift Velocity: ${coherenceCheck.data.drift_velocity}`);
     
@@ -63,8 +68,10 @@ export async function executeEngineeringAnalysisTask(projectName: string, questi
       
       // Korda leverages OpenServ's native requestHumanAssistance to halt and flag drift
       await kordaAgent.requestHumanAssistance({
-        reason: `Reality Fragmentation Warning: Divergence from established decision "${coherenceCheck.data.divergence_origin}".`,
-        context: `The proposed narrative:\n"${conclusion}"\n\nConflicts with established reality. Recommendation: ${coherenceCheck.data.recommendation}`
+        workspaceId: 1, // Mock workspace ID for local test
+        taskId: 1,      // Mock task ID for local test
+        type: 'text',
+        question: `Reality Fragmentation Warning: Divergence from established decision "${coherenceCheck.data.divergence_origin}".\n\nThe proposed narrative:\n"${conclusion}"\n\nConflicts with established reality. Recommendation: ${coherenceCheck.data.recommendation}`
       });
       return; // Halt execution, preventing fragmentation until human resolution
     }
