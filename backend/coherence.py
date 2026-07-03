@@ -18,8 +18,9 @@ async def calculate_drift_metrics(project_name: str, proposed_narrative: str, se
     # This inherently navigates the temporal edges (valid_from, invalid_at) based on the ingest setup.
     recall_results = await cognee.recall(
         query_text=proposed_narrative,
-        query_type=SearchType.CHUNKS,
-        datasets=[project_name]
+        query_type=SearchType.GRAPH_COMPLETION_COT,
+        datasets=[project_name],
+        include_references=True
     )
     
     established_reality = str(recall_results)

@@ -1,10 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-body), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+  --font-display: var(--font-display), serif;
+}
 
 @layer base {
   :root {
-    --bg-dark: #0D0E12;
+    --bg-dark: #050505; /* Deep, rich black */
     --bg-panel: rgba(255, 255, 255, 0.02);
     --border-glass: rgba(255, 255, 255, 0.05);
     --border-hover: rgba(255, 255, 255, 0.1);
@@ -14,7 +18,8 @@
     --text-muted: #484F58;
 
     --accent-cyan: #00F2FE;
-    --accent-purple: #8A2BE2;
+    --accent-purple: #9D4EDD; /* More vibrant purple */
+    --accent-neon-pink: #FF00FF; /* For massive intercepted alerts */
   }
 
   body {
@@ -22,7 +27,7 @@
   }
 
   ::selection {
-    background-color: var(--accent-cyan);
+    background-color: var(--accent-purple);
     color: white;
   }
 }
@@ -39,11 +44,19 @@
   }
 
   .text-glow-cyan {
-    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    text-shadow: 0 0 20px rgba(157, 78, 221, 0.8), 0 0 40px rgba(157, 78, 221, 0.4);
+  }
+
+  /* Subtle razor-thin grid background */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 }
 
