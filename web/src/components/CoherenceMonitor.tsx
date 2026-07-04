@@ -73,7 +73,8 @@ export const CoherenceMonitor = () => {
     await new Promise(resolve => setTimeout(resolve, 1100));
 
     try {
-      const response = await fetch('http://localhost:5000/coherence', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/coherence`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

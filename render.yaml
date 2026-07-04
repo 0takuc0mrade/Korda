@@ -1,0 +1,44 @@
+services:
+  # --- Backend: FastAPI + Cognee Core Engine ---
+  - type: web
+    name: korda-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: LLM_PROVIDER
+        sync: false
+      - key: LLM_MODEL
+        sync: false
+      - key: LLM_ENDPOINT
+        sync: false
+      - key: LLM_API_KEY
+        sync: false
+      - key: COGNEE_API_KEY
+        sync: false
+      - key: COGNEE_SKIP_CONNECTION_TEST
+        value: "true"
+      - key: EMBEDDING_PROVIDER
+        sync: false
+      - key: EMBEDDING_ENDPOINT
+        sync: false
+      - key: EMBEDDING_MODEL
+        sync: false
+      - key: GRAPH_PROMPT_PATH
+        value: custom_graph_prompt.txt
+
+  # --- Frontend: Next.js ---
+  - type: web
+    name: korda-web
+    runtime: node
+    rootDir: web
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NEXT_PUBLIC_API_URL
+        sync: false

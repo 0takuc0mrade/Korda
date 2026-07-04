@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
+from datetime import datetime
 
 class SoftwareComponent(BaseModel):
     """
@@ -8,20 +9,31 @@ class SoftwareComponent(BaseModel):
     component_id: str
     description: str
 
-class APIEndpoint(BaseModel):
+class DecisionNode(BaseModel):
     """
-    A specific API endpoint linked to a SoftwareComponent.
-    The status field is critical for mapping temporal validity (e.g., 'active' vs 'stale').
+    A specific decision, fact, or piece of shared context in the Reality Graph.
+    This replaces the narrow APIEndpoint concept for the broader Korda 2.0 engine.
     """
-    endpoint_id: str
-    endpoint_url: str
-    version: str
-    status: str
-    linked_component: str
+    node_id: str
+    context_type: str # e.g., "Architecture Decision", "API Spec", "Business Rule"
+    description: str
+    status: str # 'active' or 'stale'
+    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
 
-class DeveloperTeam(BaseModel):
+class SupersedesEdge(BaseModel):
     """
-    The human team or AI agent squad responsible for the component.
+    The structural backbone of Korda 2.0.
+    Maps exactly WHY and WHEN a new decision replaced an old one.
     """
-    team_name: str
-    active_tasks: List[str]
+    source_node_id: str
+    target_node_id: str
+    relationship_type: str = "SUPERSEDES"
+    resolution_reason: str
+    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+
+class ParticipantAgent(BaseModel):
+    """
+    Represents an autonomous agent or human interacting with the system.
+    """
+    agent_id: str
+    role: str
