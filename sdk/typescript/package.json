@@ -1,0 +1,53 @@
+{
+  "name": "@korda/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for Korda, a shared reality engine for AI agents.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Korda",
+  "homepage": "https://github.com/korda-ai/korda#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/korda-ai/korda.git",
+    "directory": "sdk/typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/korda-ai/korda/issues"
+  },
+  "keywords": [
+    "ai-agents",
+    "memory",
+    "alignment",
+    "agent-workflows",
+    "shared-reality",
+    "korda"
+  ],
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

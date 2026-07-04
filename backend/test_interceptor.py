@@ -31,6 +31,32 @@ def inject_decision_update():
     except Exception as e:
         print(f"[-] Webhook Failed: {e}")
 
+def inject_agent_drift():
+    print("\n[*] Agent 77: Ingesting Divergent Subjective Memory...")
+    payload = {
+        "type": "decision_update",
+        "session_id": "AGENT_77",
+        "context_type": "API Spec",
+        "old_node_id": "AUTH_API_V2",
+        "old_description": "The new v2 JWT authentication system.",
+        "new_node_id": "AUTH_API_V1",
+        "new_description": "The legacy v1 authentication endpoints are still active in my cached docs.",
+        "update_reason": "Agent loaded stale local documentation before the canonical update."
+    }
+    
+    req = urllib.request.Request(
+        f"{BASE_URL}/webhook/stream",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    
+    try:
+        with urllib.request.urlopen(req) as response:
+            print(f"[+] Agent Drift Response: {response.read().decode('utf-8')}")
+    except Exception as e:
+        print(f"[-] Agent Drift Injection Failed: {e}")
+
 def test_interceptor():
     print("\n[*] AI Coding Agent: Requesting LLM Generation...")
     
@@ -72,8 +98,7 @@ def test_align_and_reconcile():
     # 1. Check Alignment
     align_payload = {
         "agent_session_id": "AGENT_77",
-        "query": "What is the auth endpoint?",
-        "force_divergence": True
+        "query": "What is the active authentication API endpoint?"
     }
     req_align = urllib.request.Request(
         f"{BASE_URL}/api/v1/align",
@@ -86,6 +111,7 @@ def test_align_and_reconcile():
         with urllib.request.urlopen(req_align) as response:
             data = json.loads(response.read().decode('utf-8'))
             print(f"[!] DIVERGENCE SCORER: {data.get('message')}")
+            print(f"[!] DIVERGENCE POINT: {data.get('divergence_point')}")
     except Exception as e:
         print(f"[-] Align Check Failed: {e}")
 
@@ -93,8 +119,9 @@ def test_align_and_reconcile():
     print("\n[*] Triggering Surgical Memory Purge via cognee.forget()...")
     reconcile_payload = {
         "agent_session_id": "AGENT_77",
-        "consensus_node_id": "AUTH_API_V1",
-        "reconciled_context": "The auth system is v2 JWT exclusively."
+        "consensus_node_id": "AUTH_API_V2",
+        "supersedes_node_id": "AUTH_API_V1",
+        "reconciled_context": "The auth system is v2 JWT exclusively. AUTH_API_V1 is deprecated and must not be used."
     }
     req_reconcile = urllib.request.Request(
         f"{BASE_URL}/api/v1/reconcile",
@@ -119,6 +146,7 @@ if __name__ == "__main__":
     time.sleep(3)
     
     inject_decision_update()
+    inject_agent_drift()
     
     print("\n[*] Waiting 8 seconds for Asynchronous Worker to process & cognify the graph...")
     time.sleep(8)

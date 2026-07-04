@@ -4,6 +4,8 @@
 
 # Python
 venv/
+.venv/
+backend/.venv/
 __pycache__/
 *.pyc
 *.pyo
@@ -12,11 +14,16 @@ __pycache__/
 .coverage
 htmlcov/
 dist/
+!sdk/typescript/dist/
+!sdk/typescript/dist/**
 build/
 *.egg-info/
 
 # Node / TypeScript
 node_modules/
+.npm-cache/
+.next/
+web/.next/
 orchestrator/dist/
 npm-debug.log*
 yarn-debug.log*
@@ -36,3 +43,6 @@ yarn-error.log*
 *.lance
 *.kuzu
 *_provenance.html
+
+# Proof artifacts
+proof/output/*.json
