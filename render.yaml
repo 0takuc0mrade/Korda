@@ -8,23 +8,9 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.7"
-      - key: LLM_PROVIDER
-        sync: false
-      - key: LLM_MODEL
-        sync: false
-      - key: LLM_ENDPOINT
-        sync: false
-      - key: LLM_API_KEY
-        sync: false
       - key: COGNEE_API_KEY
         sync: false
-      - key: COGNEE_SKIP_CONNECTION_TEST
-        value: "true"
-      - key: EMBEDDING_PROVIDER
-        sync: false
-      - key: EMBEDDING_ENDPOINT
-        sync: false
-      - key: EMBEDDING_MODEL
+      - key: COGNEE_SERVICE_URL
         sync: false
       - key: GRAPH_PROMPT_PATH
         value: custom_graph_prompt.txt

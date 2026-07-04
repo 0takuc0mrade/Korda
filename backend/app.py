@@ -7,7 +7,33 @@ from fastapi.middleware.cors import CORSMiddleware
 from ontology import SoftwareComponent, DecisionNode, SupersedesEdge, ParticipantAgent
 from datetime import datetime
 
-app = FastAPI(title="Korda: Proactive Context Interceptor")
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    try:
+        print("[*] Connecting to Cognee Cloud instance...")
+        await cognee.serve()
+        print("[+] Cognee Cloud Engine connected successfully.")
+    except Exception as e:
+        print(f"[-] Cognee Connection Error: {e}")
+        
+    # Launch the single persistent background worker for safe graph writes
+    worker_task = asyncio.create_task(process_ingestion_queue())
+    
+    yield
+    
+    # Shutdown
+    print("[*] Disconnecting from Cognee Cloud...")
+    try:
+        await cognee.disconnect()
+        print("[+] Disconnected successfully.")
+    except Exception as e:
+        print(f"[-] Disconnection Error: {e}")
+    worker_task.cancel()
+
+app = FastAPI(title="Korda: Proactive Context Interceptor", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -82,19 +108,7 @@ async def process_ingestion_queue():
         finally:
             ingestion_queue.task_done()
 
-@app.on_event("startup")
-async def startup_event():
-    # Initialize the reality_matrix dataset directly in Cognee
-    try:
-        print("[*] Initializing Cognee reality_matrix environment...")
-        # Note: In a production environment, you might fetch or ensure dataset existence.
-        # For the hackathon demo, we explicitly declare our dependency on the core engine.
-        print("[+] Cognee Core Engine initialized successfully.")
-    except Exception as e:
-        print(f"[-] Cognee Initialization Error: {e}")
-        
-    # Launch the single persistent background worker for safe graph writes
-    asyncio.create_task(process_ingestion_queue())
+
 
 @app.post("/webhook/stream")
 async def stream_telemetry(request: Request):
@@ -223,11 +237,11 @@ async def reconcile_reality(request: Request):
         
         # 1. Update the Canonical Graph
         print(f"[*] Step 1: Enriching Canonical Truth (global) with consensus data...")
-        # Mocking for demo video to prevent internal library crash
+        await cognee.remember(data=reconciled_context, dataset_name="reality_matrix", session_id="global")
         
         # 2. Surgically prune the contaminated agent memory via forget()
         print(f"[*] Step 2: Surgically excising contaminated memory from session [{agent_session_id}]...")
-        # Mocking for demo video to prevent internal library crash
+        await cognee.forget(consensus_node_id, session_id=agent_session_id)
         
         return {
             "status": "reconciled",
