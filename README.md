@@ -1,29 +1,36 @@
-# Korda: Proactive Context Interception for Autonomous Agents
+# Korda: The Shared Reality Engine for Autonomous Agents
 
 > *"When multiple agents need to share state, using per-agent context or per-session embeddings creates fragmentation. Each agent operates on a different slice of truth."* 
 > — Cognee Official Documentation
 
-If an AI agent queries a standard vector database for "API documentation," it will likely pull up deprecated version 1 docs because the textual semantic overlap is 95% identical to version 2. Vectors are notoriously terrible at handling temporal state changes (old vs. new).
+[![Live Demo on Render](https://img.shields.io/badge/Live%20Demo-Render-46E3B7?style=for-the-badge&logo=render)](https://korda.onrender.com)
+
+## 🍻 The Problem: Your AI Has a Hangover
+
+If an AI agent queries a standard vector database for "API documentation," it will likely pull up deprecated version 1 docs because the textual semantic overlap is 95% identical to version 2. Vectors are notoriously terrible at handling temporal state changes (old vs. new). 
+
+When a multi-agent system runs, agents quickly spill out of their context windows. They forget the groom, lose the plot, and wake up on the roof asking *"where's my context?"* 
 
 **Alerting a human that an AI agent hallucinated stale code is a failure. Preventing the hallucination before the LLM prompt executes is the solution.**
 
-Korda isn't trying to reinvent the AI agent. We built Korda because current AI infrastructure has a fatal flaw: **Agents cannot handle temporal state changes.** 
+## 🧠 The Solution: Korda (Powered by Cognee Cloud)
 
-When documentation or components update, vector databases fail because the old and new text look semantically identical. Korda solves this not by guessing with fuzzy vector text search, but by using Cognee to map and traverse deterministic structural states.
+Korda isn't trying to reinvent the AI agent. We built Korda because current AI infrastructure has a fatal flaw: **Agents cannot handle temporal state changes without a persistent memory layer.**
 
-## 🟢 What Korda CAN Do (The Hard Engineering Reality)
+Korda is a **Cloud Native Shared Reality Engine**. Instead of acting as a passive database, Korda acts as an ultra-fast middleware router that intercepts an agent's prompt, instantly queries your massive **Cognee Cloud** brain, mathematically calculates "Reality Drift", and surgically injects guardrails based on actual graph topology.
 
-* **Deterministic State Resolution:** Instead of relying on fuzzy vector similarity (which gets confused when v1 and v2 documents look 95% identical), Korda maps explicit `status="stale"` properties to unique node IDs inside the Cognee graph.
-* **Zero-Semantic Edge Traversal:** When an agent attempts to compile code, Korda physically walks the graph from the target `SoftwareComponent` to its dependencies. If an edge hits a stale attribute, it triggers an instant interception.
-* **Granular Context Slicing:** It reduces LLM costs by injecting only the specific mutating node properties that changed, completely bypassing the expensive need to re-feed or re-vectorize an entire codebase or rulebook.
+### The Korda 2.0 Pipelines:
+1. **Topological Session Isolation (Dual-Tier Memory):** Instead of one messy global bucket, Korda wraps `cognee.remember(..., session_id=agent_id)`. Multiple agents have their own subjective, isolated experiences mapped in the cloud.
+2. **The Reality Alignment Scorer:** Korda actively diffs an agent's subjective sub-graph against the Canonical Graph using dual-concurrent `cognee.recall()` queries to mathematically calculate their divergence.
+3. **The Reconciliation Pipeline:** We actively heal the graph using `cognee.remember()` (Canonical Truth) and surgically purge the agent's contaminated memory using `cognee.forget()`.
 
-## 🔴 What Korda CANNOT Do (Protecting the Architecture)
+---
 
-* **It Cannot Fall Back on Vector Guessing:** If an asset or version is unmapped or lacks an explicit topological relation in the Cognee graph, Korda will intentionally fail closed rather than hallucinating or making an "educated semantic guess."
+## ☁️ Architecture: Best Use of Cognee Cloud
 
-## Architecture: Cognee as the Core Engine
+In a generic hackathon project, Cognee is an "add-on" wrapper. In Korda, **Cognee Cloud is the absolute homebase and lifeforce.** 
 
-In a generic hackathon project, Cognee is an "add-on" wrapper. In Korda, **Cognee is the entire infrastructure.** Without Cognee's hybrid graph-vector mapping, this system physically cannot execute.
+We entirely stripped out localized Kuzu databases and third-party LLM middlemen. Korda is deployed on Render as a hyper-efficient orchestration layer connected via a persistent socket directly to a dedicated **Cognee Cloud Tenant**. 
 
 ```text
        [ External Chat / Repo Updates ]
@@ -33,13 +40,12 @@ In a generic hackathon project, Cognee is an "add-on" wrapper. In Korda, **Cogne
                   │
                   ▼
       ┌───────────────────────┐
-      │   COGNEE CORE ENGINE  │
+      │  COGNEE CLOUD TENANT  │ ◄── (14M Prepaid Tokens handled natively)
       │                       │
-      │  .remember(Ontology)  │ ──► Maps explicit temporal status (active vs stale)
-      │                       │
-      │  .cognify()           │ ──► Links cross-session dependencies natively
-      │                       │
-      │  .recall(node_name)   │ ──► Traverses the graph to intercept agent context requests
+      │  .remember()          │ ──► Maps explicit temporal status (active vs stale)
+      │  .recall()            │ ──► Dual-concurrent querying (Canonical vs Session)
+      │  .improve()           │ ──► Consolidates multi-agent truths
+      │  .forget()            │ ──► Surgically prunes contaminated agent memory
       └───────────────────────┘
                   │
                   ▼
@@ -50,27 +56,27 @@ In a generic hackathon project, Cognee is an "add-on" wrapper. In Korda, **Cogne
          [ LLM Gateway ]
 ```
 
-To flawlessly handle real-time environments without locking the underlying Kuzu files, Korda wraps this Core Engine in an isolated `asyncio.Queue` worker.
-- **Isolated Ingestion Traffic:** Guarantees immediate HTTP 200 OK responses to source integrations (preventing GitHub/Slack timeouts).
-- **Sequential Graph Finalization:** Throttles `cognee.remember()` and `cognee.cognify()` sequentially in the background.
-- **Continuous Improvement:** Nightly cron jobs execute `cognee.improve()` to continuously heal and prune stale nodes.
+### Why Cognee Cloud?
+By migrating Korda natively to Cognee Cloud, we resolved the local database locking and concurrency crashing issues found in standard SQLite implementations. Korda can safely execute high-concurrency graph diffing and memory pruning across dozens of active agents without breaking a sweat.
 
-## Live Verification & Demo
+---
 
-To prove the proactive interception engine live for the judges:
+## 🚀 Live Verification & Demo
 
-1. **Boot the Backend Constraint Layer:**
-```bash
-cd backend
-python3 app.py
-```
+Korda is officially deployed and live on the internet! 
 
-2. **Trigger the Interceptor Test Suite:**
-We provide a local script simulating a LangGraph agent attempting to generate code for a deprecated `v1` endpoint, and Korda physically modifying its prompt to correct it.
-```bash
-cd backend
-python3 test_interceptor.py
-```
+**1. The Live Backend API:**
+Access the interactive Swagger UI to view the endpoints and intercept logic:
+👉 [https://korda.onrender.com/docs](https://korda.onrender.com/docs)
 
-3. **The Exact Result:**
-Korda maps the divergence and outputs a hardened, corrected prompt for the agent to execute safely.
+**2. The Four Operations in Action:**
+Korda heavily leans on the core Cognee memory lifecycle APIs:
+*   `/webhook/stream`: Uses `remember()` to asynchronously ingest new telemetry into the Canonical graph.
+*   `/api/v1/align`: Uses dual `recall()` to mathematically score Reality Drift.
+*   `/api/v1/reconcile`: Uses `remember()` to enforce consensus and `forget()` to purge the subjective agent's hallucinations.
+
+## 🛠 Tech Stack
+*   **Memory Layer:** Cognee Cloud SDK
+*   **Orchestration Engine:** FastAPI (Python)
+*   **Deployment:** Render (Cloud Native)
+*   **Frontend UI:** Next.js 16 (React) with React Three Fiber (Drei) for 3D Topology Visualization.
