@@ -20,9 +20,10 @@ Korda isn't trying to reinvent the AI agent. We built Korda because current AI i
 Korda is a **Cloud Native Shared Reality Engine**. Instead of acting as a passive database, Korda acts as an ultra-fast middleware router that intercepts an agent's prompt, instantly queries your massive **Cognee Cloud** brain, mathematically calculates "Reality Drift", and surgically injects guardrails based on actual graph topology.
 
 ### The Korda 2.0 Pipelines:
-1. **Topological Session Isolation (Dual-Tier Memory):** Instead of one messy global bucket, Korda wraps `cognee.remember(..., session_id=agent_id)`. Multiple agents have their own subjective, isolated experiences mapped in the cloud.
-2. **The Reality Alignment Scorer:** Korda actively diffs an agent's subjective sub-graph against the Canonical Graph using dual-concurrent `cognee.recall()` queries to mathematically calculate their divergence.
-3. **The Reconciliation Pipeline:** We actively heal the graph using `cognee.remember()` (Canonical Truth) and surgically purge the agent's contaminated memory using `cognee.forget()`.
+Korda uses Cognee sessions to isolate participant memory, dual recall to compare subjective memory against canonical truth, and reconciliation calls to update/prune memory:
+1. **Topological Session Isolation (Dual-Tier Memory):** We isolate participant memory by explicitly assigning `session_id=agent_id` during `cognee.remember()` operations.
+2. **The Reality Alignment Scorer:** We use dual `cognee.recall()` queries to retrieve and compare an agent's subjective memory against the Canonical Truth.
+3. **The Reconciliation Pipeline:** When consensus is reached, we issue reconciliation calls to update the canonical graph (`cognee.remember()`) and surgically prune the agent's contaminated memory (`cognee.forget()`).
 
 ---
 
@@ -57,7 +58,7 @@ We entirely stripped out localized Kuzu databases and third-party LLM middlemen.
 ```
 
 ### Why Cognee Cloud?
-By migrating Korda natively to Cognee Cloud, we resolved the local database locking and concurrency crashing issues found in standard SQLite implementations. Korda can safely execute high-concurrency graph diffing and memory pruning across dozens of active agents without breaking a sweat.
+By migrating Korda to Cognee Cloud, we moved off localized SQLite file-locking to a robust architecture capable of handling the dual-recall pipelines and cross-session reconciliation operations required for multi-agent drift detection.
 
 ---
 
