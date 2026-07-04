@@ -6,7 +6,7 @@ import { ScrambleText } from './ScrambleText';
 const features = [
   {
     title: "Graph Memory Plane",
-    desc: "Cure 'AI Amnesia'. Every interaction is stored in Cognee's deterministic graph memory. It's a living reality, not a flat JSON log.",
+    desc: "Every agent interaction lands in a deterministic memory graph. It's a living reality, not a flat JSON log.",
     Icon: () => (
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <motion.circle cx="24" cy="24" r="20" stroke="var(--fluid-3)" strokeWidth="2" strokeDasharray="6 6" animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "24px 24px" }} />

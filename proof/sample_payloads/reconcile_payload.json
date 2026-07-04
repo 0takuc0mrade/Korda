@@ -1,0 +1,10 @@
+{
+  "agent_session_id": "agent_b",
+  "canonical_session_id": "global",
+  "consensus_node_id": "AUTH_API_V2",
+  "supersedes_node_id": "AUTH_API_V1",
+  "purge_node_id": "AUTH_API_V1",
+  "context_type": "Authentication Architecture",
+  "reconciled_context": "AUTH_API_V2 is the canonical active authentication API. Implement login middleware with scoped service tokens. Do not use AUTH_API_V1 or legacy API keys.",
+  "resolution_reason": "Human/agent reconciliation confirmed that AUTH_API_V1 is stale and AUTH_API_V2 with scoped service tokens is canonical."
+}

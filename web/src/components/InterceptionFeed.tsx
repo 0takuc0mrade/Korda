@@ -15,9 +15,9 @@ export interface InterceptPayload {
 const MOCK_STREAM: InterceptPayload[] = [
   { id: "req_001", timestamp: "14:32:01", agent: "AGENT_7", action: "Query Structure", status: "CLEAR" },
   { id: "req_002", timestamp: "14:32:02", agent: "AGENT_7", action: "Extract Metadata", status: "CLEAR" },
-  { id: "req_003", timestamp: "14:32:04", agent: "AGENT_7", action: "Generate Code (v1 API)", status: "INTERCEPTED", targetNode: "AUTH_API_V1" },
+  { id: "req_003", timestamp: "14:32:04", agent: "AGENT_7", action: "Draft Launch Plan", status: "INTERCEPTED", targetNode: "old rollout path" },
   { id: "req_004", timestamp: "14:32:05", agent: "AGENT_2", action: "Analyze DB Schema", status: "CLEAR" },
-  { id: "req_005", timestamp: "14:32:08", agent: "AGENT_2", action: "Modify Auth Logic", status: "INTERCEPTED", targetNode: "AUTH_LOGIC_LEGACY" },
+  { id: "req_005", timestamp: "14:32:08", agent: "AGENT_2", action: "Revise Release Notes", status: "INTERCEPTED", targetNode: "stale launch memory" },
 ];
 
 interface Props {

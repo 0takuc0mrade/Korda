@@ -1,0 +1,10 @@
+{
+  "type": "decision_update",
+  "session_id": "global",
+  "context_type": "Authentication Architecture",
+  "old_node_id": "AUTH_API_V1",
+  "old_description": "AUTH_API_V1 is stale. The old auth architecture used legacy API keys and must not be used for new login middleware.",
+  "new_node_id": "AUTH_API_V2",
+  "new_description": "AUTH_API_V2 is active. The new auth architecture uses scoped service tokens for login middleware.",
+  "update_reason": "AUTH_API_V1 was superseded by AUTH_API_V2 after the auth architecture moved from legacy API keys to scoped service tokens."
+}

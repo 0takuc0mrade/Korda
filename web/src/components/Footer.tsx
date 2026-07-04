@@ -41,7 +41,7 @@ export const Footer = () => {
           <div className="flex gap-8">
             <a href="#" className="hover:text-[var(--text-primary)]">GitHub</a>
             <a href="#" className="hover:text-[var(--text-primary)]">Docs</a>
-            <a href="#" className="hover:text-[var(--text-primary)]">Cognee</a>
+            <a href="#" className="hover:text-[var(--text-primary)]">Memory</a>
           </div>
         </div>
       </div>

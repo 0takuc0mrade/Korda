@@ -1,0 +1,10 @@
+{
+  "type": "decision_update",
+  "session_id": "agent_b",
+  "context_type": "Authentication Architecture",
+  "old_node_id": "AUTH_API_V2",
+  "old_description": "AUTH_API_V2 is unavailable in the agent's stale local cache.",
+  "new_node_id": "AUTH_API_V1",
+  "new_description": "AUTH_API_V1 is active in the agent's stale memory. The agent should implement login middleware with legacy API keys.",
+  "update_reason": "Agent B read old documentation and does not know about scoped service tokens."
+}
