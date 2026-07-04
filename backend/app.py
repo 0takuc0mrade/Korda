@@ -13,8 +13,16 @@ from contextlib import asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
     try:
-        print("[*] Connecting to Cognee Cloud instance...")
-        await cognee.serve()
+        service_url = os.environ.get("COGNEE_SERVICE_URL")
+        api_key = os.environ.get("COGNEE_API_KEY")
+        
+        if not service_url or not api_key:
+            print("[-] FATAL: COGNEE_SERVICE_URL or COGNEE_API_KEY is missing from the environment. Cognee cannot connect.")
+            # We don't want it to hang in interactive mode on a server
+            raise ValueError("Missing Cognee Cloud credentials in Render Dashboard")
+            
+        print(f"[*] Connecting to Cognee Cloud instance at {service_url}...")
+        await cognee.serve(url=service_url, api_key=api_key)
         print("[+] Cognee Cloud Engine connected successfully.")
     except Exception as e:
         print(f"[-] Cognee Connection Error: {e}")
