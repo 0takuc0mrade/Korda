@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/ThemeProvider";
 import {
   KordaLogo,
   RunTimeline,
@@ -25,18 +26,27 @@ function statusTone(status: string) {
 }
 
 export default function Dashboard() {
-  const [theme, setTheme] = useState<ThemeName>("light");
+  const { theme, setTheme } = useTheme();
 
   return (
     <main data-theme={theme} className="korda-page min-h-screen overflow-hidden text-[var(--text-primary)]">
       <div className="pointer-events-none fixed -right-40 -top-44 z-0 h-[860px] w-[860px] opacity-80">
+        {theme === "light" && (
+          <div className="absolute left-1/2 top-1/2 h-[60%] w-[60%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black blur-[100px]" />
+        )}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="h-full w-full scale-125 object-contain mix-blend-screen"
-          style={{ filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)" }}
+          controls={false}
+          className="h-full w-full scale-125 object-contain mix-blend-screen [&::-webkit-media-controls]:hidden"
+          style={{ 
+            filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
+            pointerEvents: "none",
+            WebkitMaskImage: "radial-gradient(closest-side, black 40%, transparent 100%)",
+            maskImage: "radial-gradient(closest-side, black 40%, transparent 100%)"
+          }}
         >
           <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
         </video>
@@ -46,9 +56,11 @@ export default function Dashboard() {
         <header className="liquid-glass flex flex-wrap items-center justify-between gap-4 rounded-2xl px-5 py-4">
           <KordaLogo />
           <div className="flex flex-wrap items-center gap-2">
-            <StatusBadge tone="blue">Launch Systems</StatusBadge>
-            <StatusBadge tone="good">Backend connected</StatusBadge>
-            <StatusBadge tone="good">Memory online</StatusBadge>
+            <div className="hidden items-center gap-2 md:flex">
+              <StatusBadge tone="blue">Launch Systems</StatusBadge>
+              <StatusBadge tone="good">Backend connected</StatusBadge>
+              <StatusBadge tone="good">Memory online</StatusBadge>
+            </div>
             <ThemeToggle theme={theme} setTheme={setTheme} />
             <Link href="/demo" className="rounded-2xl bg-[rgba(0,132,255,0.8)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--glass-highlight)]">Run workflow</Link>
           </div>
@@ -65,9 +77,9 @@ export default function Dashboard() {
             </div>
           </aside>
 
-          <section className="relative min-h-[740px] overflow-hidden rounded-[32px]">
+          <section className="relative flex min-h-[740px] flex-col gap-4 overflow-hidden rounded-[32px] p-4 md:block md:p-0">
             <div className="absolute inset-0 soft-grid opacity-40" />
-            <div className="absolute inset-x-0 top-0 z-10 flex flex-wrap items-start justify-between gap-4 p-2 md:p-6">
+            <div className="relative z-10 flex flex-wrap items-start justify-between gap-4 md:absolute md:inset-x-0 md:top-0 md:p-6">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">Reality operations</p>
                 <h1 className="mt-2 text-5xl font-bold tracking-[-0.05em] md:text-7xl">Split-brain detected.</h1>
@@ -78,7 +90,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 hidden md:block">
               <svg className="h-full w-full">
                 <motion.path d="M210 250 C410 145, 560 160, 760 315" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 0.6 }} />
                 <path d="M760 315 C610 450, 510 500, 350 610" fill="none" stroke="rgba(244,63,94,0.35)" strokeWidth="2" strokeDasharray="8 8" />
@@ -86,7 +98,7 @@ export default function Dashboard() {
               </svg>
             </div>
 
-            <div className="absolute left-[5%] top-[24%]">
+            <div className="relative z-10 w-full md:absolute md:left-[5%] md:top-[24%] md:w-auto">
               <div className="liquid-glass rounded-[28px] px-6 py-5">
                 <div className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Canonical signal</div>
                 <div className="mt-2 text-2xl font-semibold text-emerald-500">Release gate is locked</div>
@@ -94,7 +106,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="absolute right-[8%] top-[34%]">
+            <div className="relative z-10 w-full md:absolute md:right-[8%] md:top-[34%] md:w-auto">
               <div className="liquid-glass rounded-[28px] px-6 py-5">
                 <div className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">codegen-agent memory</div>
                 <div className="mt-2 text-2xl font-semibold text-rose-500">Old rollout path</div>
@@ -102,7 +114,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="absolute bottom-[8%] left-[18%] right-[8%]">
+            <div className="relative z-10 mt-4 w-full md:absolute md:bottom-[8%] md:left-[18%] md:right-[8%] md:mt-0 md:w-auto">
               <div className="liquid-glass rounded-[28px] p-5">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>

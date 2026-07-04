@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import { useParams } from "next/navigation";
+import { useTheme } from "@/components/ThemeProvider";
 import {
   AlignmentScore,
   GlassNavbar,
   ReconciliationPanel,
   RunTimeline,
   StatusBadge,
-  ThemeName,
 } from "@/components/korda-product";
 
 export default function RunReportPage() {
-  const [theme, setTheme] = useState<ThemeName>("light");
+  const { theme, setTheme } = useTheme();
   const params = useParams<{ id: string }>();
 
   return (

@@ -17,6 +17,7 @@ import {
   reconcilePayload,
   stalePromptPayload,
 } from "@/lib/korda-api";
+import { useTheme } from "./ThemeProvider";
 
 export type ThemeName = "light" | "dark";
 
@@ -107,8 +108,8 @@ export function EndpointBadge({ children }: { children: React.ReactNode }) {
 
 export function GlassNavbar({ theme, setTheme }: ThemeProps) {
   return (
-    <div className="sticky top-[30px] z-50 mx-auto max-w-[1600px] px-4">
-      <nav className="liquid-glass mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between rounded-2xl px-4 md:w-fit md:min-w-[980px] md:px-5">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_80%,transparent)] backdrop-blur-xl">
+      <nav className="mx-auto flex min-h-16 max-w-[1600px] items-center justify-between px-4 md:px-8">
         <KordaLogo />
         <div className="hidden items-center gap-1 md:flex">
           {navItems.map(([label, href]) => (
@@ -117,7 +118,7 @@ export function GlassNavbar({ theme, setTheme }: ThemeProps) {
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <ThemeToggle theme={theme} setTheme={setTheme} />
           <Link href="/demo" className="group hidden items-center gap-2 rounded-xl bg-[rgba(0,132,255,0.8)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--glass-highlight)] transition hover:scale-[1.02] md:inline-flex">
             Run workflow
@@ -125,7 +126,7 @@ export function GlassNavbar({ theme, setTheme }: ThemeProps) {
           </Link>
         </div>
       </nav>
-    </div>
+    </header>
   );
 }
 
@@ -173,15 +174,25 @@ export function RealitySyncCard() {
 }
 
 export function HeroOrbField() {
+  const { theme } = useTheme();
   return (
     <div className="relative min-h-[560px] overflow-visible">
+      {theme === "light" && (
+        <div className="absolute -right-36 -top-24 h-[780px] w-[780px] scale-50 rounded-full bg-black blur-[100px]" />
+      )}
       <motion.video
         autoPlay
         loop
         muted
         playsInline
-        className="pointer-events-none absolute -right-36 -top-24 h-[780px] w-[780px] scale-125 object-contain mix-blend-screen"
-        style={{ filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)" }}
+        controls={false}
+        className="pointer-events-none absolute -right-36 -top-24 h-[780px] w-[780px] scale-125 object-contain mix-blend-screen [&::-webkit-media-controls]:hidden"
+        style={{ 
+          filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
+          pointerEvents: "none",
+          WebkitMaskImage: "radial-gradient(closest-side, black 40%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, black 40%, transparent 100%)"
+        }}
         animate={{ y: [0, -16, 0], rotate: [0, 2, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -210,6 +221,7 @@ export function HeroOrbField() {
 }
 
 export function GlassyOrbHero() {
+  const { theme } = useTheme();
   return (
     <div className="relative min-h-[560px] overflow-visible">
       <motion.video
@@ -217,8 +229,14 @@ export function GlassyOrbHero() {
         loop
         muted
         playsInline
-        className="absolute -right-28 -top-20 h-[720px] w-[720px] scale-125 object-contain mix-blend-screen"
-        style={{ filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)" }}
+        controls={false}
+        className={cx("pointer-events-none absolute -right-28 -top-20 h-[720px] w-[720px] scale-125 object-contain [&::-webkit-media-controls]:hidden", theme === "light" ? "mix-blend-darken opacity-90" : "mix-blend-screen")}
+        style={{ 
+          filter: theme === "light" ? "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.2) invert(1) hue-rotate(180deg)" : "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
+          pointerEvents: "none",
+          WebkitMaskImage: "radial-gradient(closest-side, black 40%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, black 40%, transparent 100%)"
+        }}
         animate={{ y: [0, -14, 0], rotate: [0, 2, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -243,6 +261,7 @@ export function FeatureCard({ title, copy }: { title: string; copy: string }) {
 }
 
 export function DashboardPreview() {
+  const { theme } = useTheme();
   return (
     <div className="liquid-glass relative min-h-[720px] overflow-hidden rounded-[32px] p-5 shadow-[0_40px_140px_rgba(49,154,255,0.18)]">
       <video
@@ -250,8 +269,14 @@ export function DashboardPreview() {
         loop
         muted
         playsInline
-        className="pointer-events-none absolute -right-28 -top-36 h-[760px] w-[760px] scale-125 object-contain mix-blend-screen opacity-80"
-        style={{ filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)" }}
+        controls={false}
+        className={cx("pointer-events-none absolute -right-28 -top-36 h-[760px] w-[760px] scale-125 object-contain opacity-90 [&::-webkit-media-controls]:hidden", theme === "light" ? "mix-blend-darken" : "mix-blend-screen")}
+        style={{ 
+          filter: theme === "light" ? "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1) invert(1) hue-rotate(180deg)" : "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
+          pointerEvents: "none",
+          WebkitMaskImage: "radial-gradient(circle at center, black 35%, transparent 65%)",
+          maskImage: "radial-gradient(circle at center, black 35%, transparent 65%)"
+        }}
       >
         <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
       </video>
@@ -363,24 +388,24 @@ export function AlignmentScore({ score = 42, label = "agent_b" }: { score?: numb
 
 export function RealityGraph({ compact = false }: { compact?: boolean }) {
   const nodes = [
-    { id: "canonical", x: "50%", y: "22%", label: "Canonical truth", tone: "blue" },
-    { id: "agentA", x: "20%", y: "64%", label: "Agent A", tone: "good" },
-    { id: "agentB", x: "78%", y: "64%", label: "Agent B", tone: "bad" },
-    { id: "stale", x: "66%", y: "42%", label: "Stale policy", sub: "deprecated", tone: "warn" },
-    { id: "current", x: "38%", y: "42%", label: "Current policy", sub: "active", tone: "good" },
+    { id: "canonical", x: "50%", y: "15%", label: "Canonical truth", tone: "blue" },
+    { id: "agentA", x: "15%", y: "55%", label: "Agent A", tone: "good" },
+    { id: "agentB", x: "85%", y: "55%", label: "Agent B", tone: "bad" },
+    { id: "stale", x: "75%", y: "35%", label: "Stale policy", sub: "deprecated", tone: "warn" },
+    { id: "current", x: "25%", y: "35%", label: "Current policy", sub: "active", tone: "good" },
   ];
 
   return (
     <div className={cx("relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-soft)]", compact ? "h-[360px]" : "h-[460px]")}>
       <div className="absolute inset-0 soft-grid opacity-60" />
       <svg className="absolute inset-0 h-full w-full">
-        <line x1="50%" y1="22%" x2="38%" y2="42%" stroke="var(--border-strong)" strokeWidth="1.5" />
-        <line x1="50%" y1="22%" x2="66%" y2="42%" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="5 5" />
-        <line x1="38%" y1="42%" x2="20%" y2="64%" stroke="var(--positive)" strokeOpacity="0.45" strokeWidth="1.5" />
-        <line x1="66%" y1="42%" x2="78%" y2="64%" stroke="var(--critical)" strokeOpacity="0.55" strokeWidth="1.5" />
-        <motion.line x1="38%" y1="42%" x2="78%" y2="64%" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} />
+        <line x1="50%" y1="22%" x2="25%" y2="28%" stroke="var(--border-strong)" strokeWidth="1.5" />
+        <line x1="50%" y1="22%" x2="75%" y2="28%" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="5 5" />
+        <line x1="25%" y1="42%" x2="15%" y2="48%" stroke="var(--positive)" strokeOpacity="0.45" strokeWidth="1.5" />
+        <line x1="75%" y1="42%" x2="85%" y2="48%" stroke="var(--critical)" strokeOpacity="0.55" strokeWidth="1.5" />
+        <motion.line x1="25%" y1="42%" x2="85%" y2="48%" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} />
       </svg>
-      <div className="absolute left-[41%] top-[36%] rounded-md border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 font-mono text-[10px] text-[var(--text-muted)]">
+      <div className="absolute left-[50%] top-[25%] -translate-x-1/2 rounded-md border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 font-mono text-[10px] text-[var(--text-muted)]">
         superseded_by
       </div>
       {nodes.map((node) => (
@@ -638,7 +663,7 @@ function RunEvidence({ steps, results }: { steps: WorkflowStep[]; results: Array
               <StatusBadge tone="good">HTTP {result.statusCode}</StatusBadge>
             </summary>
             <p className="mt-3 text-sm text-[var(--text-secondary)]">{evidenceSummary(step.receiptTitle, result)}</p>
-            <pre className="mt-3 max-h-[320px] overflow-auto rounded-xl bg-[var(--surface-muted)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">{JSON.stringify(result.body, null, 2)}</pre>
+            <pre className="mt-3 max-h-[320px] w-full overflow-auto rounded-xl bg-[var(--surface-muted)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">{JSON.stringify(result.body, null, 2)}</pre>
           </details>
         ))}
       </div>
@@ -733,8 +758,8 @@ function WorkflowSetup({ onStart }: { onStart: (inputs: CustomWorkflowInputs) =>
               Tell Korda what the canonical project truth is, what the agent currently believes, and the stale prompt it would use. Korda will run the full drift detection and reconciliation loop against your inputs.
             </p>
           </div>
-          <button onClick={fillExample} className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--text-primary)] transition hover:border-[var(--border-strong)]">
-            Use example
+          <button onClick={fillExample} className="group flex items-center gap-2 rounded-xl bg-[var(--surface-elevated)] px-4 py-2 text-sm font-semibold text-[var(--accent)] shadow-sm ring-1 ring-inset ring-[var(--accent)]/30 transition hover:bg-[var(--accent)]/10 hover:ring-[var(--accent)]">
+            Use example data
           </button>
         </div>
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
@@ -915,7 +940,7 @@ function DemoStepperRunner({ api, inputs, onReset }: { api: ReturnType<typeof bu
         </div>
       </div>
       <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-        <div className="liquid-glass rounded-[28px] p-4">
+        <div className="liquid-glass min-w-0 rounded-[28px] p-4">
           <div className="mb-4 flex items-center justify-between gap-3">
             <StatusBadge tone={statusTone}>{statusLabel}</StatusBadge>
             <button onClick={runAll} disabled={loading || backendStatus === "unavailable"} className="rounded-lg bg-[var(--text-primary)] px-3 py-2 text-xs font-semibold text-[var(--background)] disabled:opacity-50">Run all</button>
@@ -932,7 +957,7 @@ function DemoStepperRunner({ api, inputs, onReset }: { api: ReturnType<typeof bu
             ))}
           </div>
         </div>
-        <div className="liquid-glass rounded-[28px] p-5">
+        <div className="liquid-glass min-w-0 rounded-[28px] p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight">{selected.title}</h2>
@@ -944,13 +969,13 @@ function DemoStepperRunner({ api, inputs, onReset }: { api: ReturnType<typeof bu
           </div>
           {error && <BackendErrorPanel error={error} />}
           <div className="mt-5 grid gap-4 xl:grid-cols-2">
-            <div>
+            <div className="min-w-0">
               <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Request</div>
-              <pre className="max-h-[440px] overflow-auto rounded-2xl bg-[var(--surface-muted)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">{JSON.stringify(selected.payload, null, 2)}</pre>
+              <pre className="max-h-[440px] w-full overflow-auto rounded-2xl bg-[var(--surface-muted)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">{JSON.stringify(selected.payload, null, 2)}</pre>
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Response</div>
-              <pre className="max-h-[440px] overflow-auto rounded-2xl bg-[var(--surface-muted)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">{JSON.stringify(selectedResult?.body ?? { status: "waiting_for_backend_step" }, null, 2)}</pre>
+              <pre className="max-h-[440px] w-full overflow-auto rounded-2xl bg-[var(--surface-muted)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">{JSON.stringify(selectedResult?.body ?? { status: "waiting_for_backend_step" }, null, 2)}</pre>
             </div>
           </div>
         </div>

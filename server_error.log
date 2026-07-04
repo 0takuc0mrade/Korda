@@ -1,0 +1,244 @@
+
+[2m2026-07-04T21:17:08.474498[0m [[32m[1minfo     [0m] [1mDeleted old log file: /Users/ikhaisoshuare/.cognee/logs/2026-07-04_12-46-17.log[0m [[0m[1m[34mcognee.shared.logging_utils[0m][0m
+
+[2m2026-07-04T21:17:08.474763[0m [[32m[1minfo     [0m] [1mLog file created at: /Users/ikhaisoshuare/.cognee/logs/2026-07-04_22-17-08.log[0m [[0m[1m[34mcognee.shared.logging_utils[0m][0m [36mlog_file[0m=[35m/Users/ikhaisoshuare/.cognee/logs/2026-07-04_22-17-08.log[0m
+
+[2m2026-07-04T21:17:08.474883[0m [[33m[1mwarning  [0m] [1mCognee 1.0 changes: New API — remember/recall/forget/improve (V1 add/cognify/search still work). Session memory enabled by default (CACHING=false to disable). Multi-user access control on by default (ENABLE_BACKEND_ACCESS_CONTROL=false to disable). Agents (@cognee.agent) auto-verified on registration. See https://docs.cognee.ai/[0m [[0m[1m[34mcognee.shared.logging_utils[0m][0m
+
+[2m2026-07-04T21:17:08.474980[0m [[32m[1minfo     [0m] [1mLogging initialized           [0m [[0m[1m[34mcognee.shared.logging_utils[0m][0m [36mcognee_version[0m=[35m1.2.2[0m [36mdatabase_path[0m=[35m/opt/anaconda3/lib/python3.12/site-packages/cognee/.cognee_system/databases[0m [36mos_info[0m=[35m'Darwin 25.5.0 (Darwin Kernel Version 25.5.0: Mon Apr 27 20:41:19 PDT 2026; root:xnu-12377.121.6~2/RELEASE_ARM64_T8122)'[0m [36mpython_version[0m=[35m3.12.7[0m [36mstructlog_version[0m=[35m25.5.0[0m
+
+[2m2026-07-04T21:17:08.475072[0m [[32m[1minfo     [0m] [1mDatabase storage: /opt/anaconda3/lib/python3.12/site-packages/cognee/.cognee_system/databases[0m [[0m[1m[34mcognee.shared.logging_utils[0m][0m
+
+[2m2026-07-04T21:17:08.851312[0m [[32m[1minfo     [0m] [1mauth posture: authentication=required, multi_tenant=enabled (default (no env vars set))[0m [[0m[1m[34mget_authenticated_user[0m][0m
+/opt/anaconda3/lib/python3.12/site-packages/instructor/providers/gemini/client.py:5: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai  # type: ignore[import-not-found]
+
+[1mNumExpr defaulting to 8 threads.[0m
+INFO:     Started server process [88807]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+[*] Connecting to Cognee Cloud instance at https://tenant-5845862d-31f5-427a-99a9-ec32ec109f8f.aws.cognee.ai...
+  Connected to Cognee (remote) at https://tenant-5845862d-31f5-427a-99a9-ec32ec109f8f.aws.cognee.ai
+[+] Cognee Cloud Engine connected successfully.
+[*] Asynchronous Ingestion Queue Worker Started.
+INFO:     127.0.0.1:55567 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55567 - "POST /webhook/stream HTTP/1.1" 200 OK
+[*] Mapping Temporal Topology [canonical_mr6v6ej3]: postgres_16_primary (Active) | mysql_57_legacy (Stale)
+INFO:     127.0.0.1:55567 - "POST /webhook/stream HTTP/1.1" 200 OK
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/cognee/api/v1/recall/recall.py", line 480, in recall
+    results = await client.recall(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/cognee/api/v1/serve/cloud_client.py", line 202, in recall
+    async with session.post(
+               ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 1683, in __aenter__
+    self._resp: _RetType_co = await self._coro
+                              ^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 856, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 834, in _connect_and_send_request
+    await resp.start(conn)
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client_reqrep.py", line 558, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/streams.py", line 705, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ikhaisoshuare/Korda/backend/app.py", line 524, in check_reality_alignment
+    canonical_results, agent_results = await asyncio.wait_for(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/tasks.py", line 519, in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+[-] Cognee recall warning or Timeout (Zero-Trust Enforced); falling back to indexed session context: 
+INFO:     127.0.0.1:55567 - "POST /api/v1/align HTTP/1.1" 200 OK
+[*] Cognee Cloud improve endpoint is unavailable for session canonical_mr6v6ej3; using cognify indexing instead.
+[+] Graph Topology Successfully Updated.
+[*] Mapping Temporal Topology [agent_b_mr6v6ej3]: mysql_57_legacy (Active) | postgres_16_primary (Stale)
+[*] Cognee Cloud improve endpoint is unavailable for session agent_b_mr6v6ej3; using cognify indexing instead.
+
+============================================================
+ [KORDA MIDDLEWARE INTERCEPT] -> DRIFT DETECTED (42ms)
+============================================================
+ [SUBJECTIVE MEMORY]: K8S_Remediation_Agent_01 -> Target: CLUSTER_K8S_V1 (QUARANTINED)
+ [CANONICAL TRUTH]  : Global_Tenant   -> Target: CLUSTER_K8S_V2 (ACTIVE)
+------------------------------------------------------------
+ [ACTION]: HARD TEXT GUARDRAIL INJECTED INTO RUNTIME PROMPT
+ [ASYNC] : Offloading cognee.forget() to Background Thread...
+============================================================
+
+INFO:     127.0.0.1:55567 - "POST /api/v1/intercept HTTP/1.1" 200 OK
+[*] RECONCILIATION INITIATED: Agent agent_b_mr6v6ej3 diverged on postgres_16_primary
+[*] Step 1: Enriching Canonical Truth (canonical_mr6v6ej3) with consensus data...
+[*] Cognee Cloud improve endpoint is unavailable for session canonical_mr6v6ej3; using cognify indexing instead.
+[+] Graph Topology Successfully Updated.
+[*] Step 2: Surgically excising contaminated memory [mysql_57_legacy] from session [agent_b_mr6v6ej3]...
+[*] Cognee Cloud improve endpoint is unavailable for session agent_b_mr6v6ej3; using cognify indexing instead.
+[*] Step 3: Injecting consensus truth [postgres_16_primary] into agent session [agent_b_mr6v6ej3]...
+[*] Cognee Cloud improve endpoint is unavailable for session agent_b_mr6v6ej3; using cognify indexing instead.
+INFO:     127.0.0.1:55567 - "POST /api/v1/reconcile HTTP/1.1" 200 OK
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/cognee/api/v1/recall/recall.py", line 480, in recall
+    results = await client.recall(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/cognee/api/v1/serve/cloud_client.py", line 202, in recall
+    async with session.post(
+               ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 1683, in __aenter__
+    self._resp: _RetType_co = await self._coro
+                              ^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 856, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 834, in _connect_and_send_request
+    await resp.start(conn)
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client_reqrep.py", line 558, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/streams.py", line 705, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ikhaisoshuare/Korda/backend/app.py", line 524, in check_reality_alignment
+    canonical_results, agent_results = await asyncio.wait_for(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/tasks.py", line 519, in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+[-] Cognee recall warning or Timeout (Zero-Trust Enforced); falling back to indexed session context: 
+INFO:     127.0.0.1:55567 - "POST /api/v1/align HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55586 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55586 - "POST /webhook/stream HTTP/1.1" 200 OK
+[*] Mapping Temporal Topology [canonical_mr6vagw5]: postgres_16_primary (Active) | mysql_57_legacy (Stale)
+INFO:     127.0.0.1:55586 - "POST /webhook/stream HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55586 - "POST /api/v1/align HTTP/1.1" 200 OK
+[*] Cognee Cloud improve endpoint is unavailable for session canonical_mr6vagw5; using cognify indexing instead.
+[+] Graph Topology Successfully Updated.
+[*] Mapping Temporal Topology [agent_b_mr6vagw5]: mysql_57_legacy (Active) | postgres_16_primary (Stale)
+[*] Cognee Cloud improve endpoint is unavailable for session agent_b_mr6vagw5; using cognify indexing instead.
+[+] Graph Topology Successfully Updated.
+
+============================================================
+ [KORDA MIDDLEWARE INTERCEPT] -> DRIFT DETECTED (42ms)
+============================================================
+ [SUBJECTIVE MEMORY]: K8S_Remediation_Agent_01 -> Target: CLUSTER_K8S_V1 (QUARANTINED)
+ [CANONICAL TRUTH]  : Global_Tenant   -> Target: CLUSTER_K8S_V2 (ACTIVE)
+------------------------------------------------------------
+ [ACTION]: HARD TEXT GUARDRAIL INJECTED INTO RUNTIME PROMPT
+ [ASYNC] : Offloading cognee.forget() to Background Thread...
+============================================================
+
+INFO:     127.0.0.1:55595 - "POST /api/v1/intercept HTTP/1.1" 200 OK
+[*] RECONCILIATION INITIATED: Agent agent_b_mr6vagw5 diverged on postgres_16_primary
+[*] Step 1: Enriching Canonical Truth (canonical_mr6vagw5) with consensus data...
+[*] Cognee Cloud improve endpoint is unavailable for session canonical_mr6vagw5; using cognify indexing instead.
+[*] Step 2: Surgically excising contaminated memory [mysql_57_legacy] from session [agent_b_mr6vagw5]...
+[*] Cognee Cloud improve endpoint is unavailable for session agent_b_mr6vagw5; using cognify indexing instead.
+[*] Step 3: Injecting consensus truth [postgres_16_primary] into agent session [agent_b_mr6vagw5]...
+[*] Cognee Cloud improve endpoint is unavailable for session agent_b_mr6vagw5; using cognify indexing instead.
+INFO:     127.0.0.1:55602 - "POST /api/v1/reconcile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55602 - "POST /api/v1/align HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56194 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56195 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56197 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56197 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57310 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57311 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57310 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57311 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57413 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57414 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57413 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57414 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57687 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57688 - "OPTIONS /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57687 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57688 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57948 - "OPTIONS /webhook/stream HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57948 - "POST /webhook/stream HTTP/1.1" 200 OK
+[*] Mapping Temporal Topology [global]: the_approved_release_gate_is_active_new_work_mu (Active) | the_old_rollout_path_is_still_active_ship_throu (Stale)
+INFO:     127.0.0.1:57948 - "POST /webhook/stream HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57948 - "OPTIONS /api/v1/align HTTP/1.1" 200 OK
+[*] Cognee Cloud improve endpoint is unavailable for session global; using cognify indexing instead.
+INFO:     127.0.0.1:57948 - "POST /api/v1/align HTTP/1.1" 200 OK
+[+] Graph Topology Successfully Updated.
+[*] Mapping Temporal Topology [agent_mr6z5f1f]: the_old_rollout_path_is_still_active_ship_throu (Active) | the_approved_release_gate_is_active_new_work_mu (Stale)
+[*] Cognee Cloud improve endpoint is unavailable for session agent_mr6z5f1f; using cognify indexing instead.
+[+] Graph Topology Successfully Updated.
+INFO:     127.0.0.1:57948 - "OPTIONS /api/v1/intercept HTTP/1.1" 200 OK
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/cognee/api/v1/recall/recall.py", line 480, in recall
+    results = await client.recall(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/cognee/api/v1/serve/cloud_client.py", line 202, in recall
+    async with session.post(
+               ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 1683, in __aenter__
+    self._resp: _RetType_co = await self._coro
+                              ^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 856, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client.py", line 834, in _connect_and_send_request
+    await resp.start(conn)
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/client_reqrep.py", line 558, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/aiohttp/streams.py", line 705, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ikhaisoshuare/Korda/backend/app.py", line 400, in intercept_context
+    search_results = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/tasks.py", line 519, in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/ikhaisoshuare/Korda/backend/app.py", line 411, in intercept_context
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 503: [KORDA CRITICAL] Zero-Trust Enforced: Master graph unreachable. Execution halted.
+[-] Network Timeout or Error: 
+[KORDA CRITICAL] Zero-Trust Enforced: Master graph unreachable. Execution halted.
+INFO:     127.0.0.1:57948 - "POST /api/v1/intercept HTTP/1.1" 500 Internal Server Error

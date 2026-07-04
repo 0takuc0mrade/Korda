@@ -18,7 +18,7 @@ try {
 // ─── Configuration ──────────────────────────────────────────────────────────
 
 const KORDA_URL = process.env.KORDA_BACKEND_URL ?? "http://localhost:8000";
-const GEMINI_KEY = process.env.GEMINI_KEY ?? "";
+const GEMINI_KEY = process.env.GEMINI_KEY ?? process.env.GEMINI_API_KEY ?? "";
 const MODEL = "gemini-2.5-flash";
 
 const korda = new KordaClient({ baseUrl: KORDA_URL });

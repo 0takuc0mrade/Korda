@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "@/components/ThemeProvider";
 import {
   GlassNavbar,
   StatusBadge,
@@ -52,7 +53,7 @@ function CodeBlock({ children }: { children: string }) {
 }
 
 export default function SdkPage() {
-  const [theme, setTheme] = useState<ThemeName>("light");
+  const { theme, setTheme } = useTheme();
 
   return (
     <main data-theme={theme} className="korda-page min-h-screen text-[var(--text-primary)]">

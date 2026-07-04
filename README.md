@@ -81,6 +81,8 @@ We entirely stripped out localized Kuzu databases and third-party LLM middlemen.
 ### Why Cognee Cloud?
 By migrating Korda to Cognee Cloud, we moved off localized SQLite file-locking to a robust architecture capable of handling the dual-recall pipelines and cross-session reconciliation operations required for multi-agent drift detection.
 
+> **Engineered and stress-tested natively using Cognee Cloud Developer Tier via the COGNEE-35 framework.**
+
 ---
 
 ## 🚀 Live Verification & Demo

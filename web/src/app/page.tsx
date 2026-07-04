@@ -9,6 +9,7 @@ import {
   StatusBadge,
   ThemeName,
 } from "@/components/korda-product";
+import { useTheme } from "@/components/ThemeProvider";
 
 const essentials = [
   ["Compare", "Agent belief is checked against canonical project truth."],
@@ -17,7 +18,7 @@ const essentials = [
 ];
 
 export default function LandingPage() {
-  const [theme, setTheme] = useState<ThemeName>("light");
+  const { theme, setTheme } = useTheme();
 
   return (
     <main data-theme={theme} className="korda-page min-h-screen overflow-hidden text-[var(--text-primary)]">

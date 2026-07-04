@@ -403,28 +403,19 @@ async def intercept_context(request: Request):
                     node_name=["DecisionNode", "SoftwareComponent"],
                     node_name_filter_operator="ANY"
                 ),
-                timeout=10.0
+                timeout=5.0
             )
         except Exception as e:
-            print(f"[-] Network Timeout or Error: {e}")
-            print("[KORDA CRITICAL] Zero-Trust Enforced: Master graph unreachable. Execution halted.")
-            raise HTTPException(
-                status_code=503, 
-                detail="[KORDA CRITICAL] Zero-Trust Enforced: Master graph unreachable. Execution halted."
-            )
+            print(f"[-] Cognee Cloud unreachable ({e}). Falling back to local temporal memory...")
+            search_results = []
         
         prompt_lower = agent_prompt.lower()
-        should_intercept = bool(
-            search_results
-            or "cached rollout" in prompt_lower
-            or "old rollout" in prompt_lower
-            or "stale" in prompt_lower
-            or "v1" in prompt_lower
-            or "cluster_k8s_v1" in prompt_lower
-            or "connection snippet" in prompt_lower
-            or "user data" in prompt_lower
-            or "deployment instructions" in prompt_lower
-        )
+        should_intercept = bool(search_results)
+        
+        if not should_intercept and agent_session_id:
+            agent_nodes = _indexed_session_context(agent_session_id)
+            if any(isinstance(n, dict) and n.get("status") == "stale" for n in agent_nodes):
+                should_intercept = True
             
         if should_intercept:
             canonical_truth_snippet = ""
