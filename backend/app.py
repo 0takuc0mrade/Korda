@@ -403,7 +403,7 @@ async def intercept_context(request: Request):
                     node_name=["DecisionNode", "SoftwareComponent"],
                     node_name_filter_operator="ANY"
                 ),
-                timeout=2.0
+                timeout=10.0
             )
         except Exception as e:
             print(f"[-] Network Timeout or Error: {e}")
@@ -523,7 +523,7 @@ async def check_reality_alignment(request: Request):
         try:
             canonical_results, agent_results = await asyncio.wait_for(
                 asyncio.gather(canonical_task, agent_task),
-                timeout=2.0
+                timeout=10.0
             )
             
             # Merge with in-memory session index to ensure instant drift detection for fast-paced demos
