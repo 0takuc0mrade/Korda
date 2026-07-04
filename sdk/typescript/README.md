@@ -169,6 +169,56 @@ Your vector store has outdated chunks. Korda sits *after* retrieval — even if 
 ### Regulated industries
 An AI assistant drafts compliance documents. A regulation changed, but the knowledge base hasn't been re-indexed. Korda provides an auditable interception trail proving every prompt was checked against current truth.
 
+## CLI
+
+The SDK ships with a `korda` command-line tool. Install globally to use it anywhere:
+
+```bash
+npm install -g @korda/sdk
+```
+
+### Commands
+
+| Command | Description |
+|---|---|
+| `korda health` | Check backend and Cognee connectivity |
+| `korda align <agent_session>` | Check if an agent has drifted from canonical truth |
+| `korda intercept "<prompt>"` | Test if a prompt would be intercepted |
+| `korda protect "<prompt>"` | Return the hardened prompt (pipe-friendly, no decoration) |
+| `korda remember --old-node X --new-node Y --new-desc "..."` | Record a project truth change |
+| `korda reconcile <agent> --consensus <node> --context "..."` | Reconcile agent memory with truth |
+
+### Global Options
+
+| Flag | Description |
+|---|---|
+| `--backend <url>` | Korda backend URL (default: `$KORDA_BACKEND_URL` or `http://localhost:8000`) |
+
+### Examples
+
+```bash
+# Quick health check
+korda health --backend http://localhost:8000
+
+# Check if an agent is drifted
+korda align agent_b --query "What database do we use?"
+
+# CI/CD gate: fail the build if alignment drops below 80%
+korda align agent_b --fail-below 80
+
+# Test if a prompt would be intercepted
+korda intercept "Write a MySQL connection snippet"
+
+# Get the hardened prompt for piping into another tool
+korda protect "Deploy via SSH to prod" | pbcopy
+
+# Record a truth change
+korda remember --old-node mysql_57 --new-node postgres_16 --new-desc "Migrated to PostgreSQL 16"
+
+# Reconcile an agent's memory
+korda reconcile agent_b --consensus postgres_16 --context "PostgreSQL 16 is canonical"
+```
+
 ## Publishing
 
 Before publishing:

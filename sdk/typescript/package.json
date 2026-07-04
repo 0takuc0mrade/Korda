@@ -28,6 +28,9 @@
     "README.md",
     "LICENSE"
   ],
+  "bin": {
+    "korda": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -45,6 +48,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@types/node": "^26.1.0",
     "typescript": "^5.0.0"
   },
   "engines": {
