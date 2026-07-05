@@ -44,9 +44,9 @@ export default function LandingPage() {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.1 }}>
+        <div className="relative z-0">
           <HeroOrbField />
-        </motion.div>
+        </div>
       </section>
 
       <section id="product" className="mx-auto max-w-7xl px-4 pb-24">

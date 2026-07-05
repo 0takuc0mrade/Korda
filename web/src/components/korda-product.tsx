@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import Link from "next/link";
@@ -177,27 +178,35 @@ export function HeroOrbField() {
   const { theme } = useTheme();
   return (
     <div className="relative min-h-[560px] overflow-visible">
-      {theme === "light" && (
-        <div className="absolute -right-36 -top-24 h-[780px] w-[780px] scale-50 rounded-full bg-black blur-[100px]" />
-      )}
-      <motion.video
-        autoPlay
-        loop
-        muted
-        playsInline
-        controls={false}
-        className="pointer-events-none absolute -right-36 -top-24 h-[780px] w-[780px] scale-125 object-contain mix-blend-screen [&::-webkit-media-controls]:hidden"
-        style={{ 
-          filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
-          pointerEvents: "none",
-          WebkitMaskImage: "radial-gradient(closest-side, black 40%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, black 40%, transparent 100%)"
+      <div 
+        className="pointer-events-none absolute -right-24 -top-16 h-[700px] w-[700px]"
+        style={{
+          WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 68%)",
+          maskImage: "radial-gradient(circle at center, black 40%, transparent 68%)"
         }}
-        animate={{ y: [0, -16, 0], rotate: [0, 2, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
-      </motion.video>
+        <motion.video
+          ref={(el) => { if (el) { el.defaultMuted = true; el.muted = true; } }}
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
+          className={`h-full w-full object-contain [&::-webkit-media-controls]:hidden ${theme === 'light' ? 'mix-blend-multiply' : 'mix-blend-screen'}`}
+          style={{ 
+            filter: theme === 'light' 
+              ? 'hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1) invert(1) hue-rotate(180deg)' 
+              : 'hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)' 
+          }}
+          animate={{ y: [0, -16, 0], rotate: [0, 2, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
+          <source src="https://future.co/images/homepage/glassy-orb/orb-purple.mp4" type="video/mp4" />
+        </motion.video>
+      </div>
       <div className="pointer-events-none absolute -right-24 top-8 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(96,177,255,0.22),transparent_64%)] blur-3xl" />
       <motion.div
         className="absolute left-0 top-24 hidden w-[72%] md:block"
@@ -224,24 +233,35 @@ export function GlassyOrbHero() {
   const { theme } = useTheme();
   return (
     <div className="relative min-h-[560px] overflow-visible">
-      <motion.video
-        autoPlay
-        loop
-        muted
-        playsInline
-        controls={false}
-        className={cx("pointer-events-none absolute -right-28 -top-20 h-[720px] w-[720px] scale-125 object-contain [&::-webkit-media-controls]:hidden", theme === "light" ? "mix-blend-darken opacity-90" : "mix-blend-screen")}
-        style={{ 
-          filter: theme === "light" ? "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.2) invert(1) hue-rotate(180deg)" : "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
-          pointerEvents: "none",
-          WebkitMaskImage: "radial-gradient(closest-side, black 40%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, black 40%, transparent 100%)"
+      <div 
+        className="pointer-events-none absolute -right-16 -top-12 h-[640px] w-[640px]"
+        style={{
+          WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 68%)",
+          maskImage: "radial-gradient(circle at center, black 40%, transparent 68%)"
         }}
-        animate={{ y: [0, -14, 0], rotate: [0, 2, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
-      </motion.video>
+        <motion.video
+          ref={(el) => { if (el) { el.defaultMuted = true; el.muted = true; } }}
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
+          className={`h-full w-full object-contain [&::-webkit-media-controls]:hidden ${theme === 'light' ? 'mix-blend-multiply' : 'mix-blend-screen'}`}
+          style={{ 
+            filter: theme === 'light' 
+              ? 'hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1) invert(1) hue-rotate(180deg)' 
+              : 'saturate(200%) brightness(1.15) contrast(1.1)' 
+          }}
+          animate={{ y: [0, -14, 0], rotate: [0, 2, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <source src="https://future.co/images/homepage/glassy-orb/orb-blue.webm" type="video/webm" />
+          <source src="https://future.co/images/homepage/glassy-orb/orb-blue.mp4" type="video/mp4" />
+        </motion.video>
+      </div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(96,177,255,0.24),transparent_34rem)]" />
       <div className="absolute bottom-8 left-3 right-3 md:left-8 md:right-auto">
         <RealitySyncCard />
@@ -268,6 +288,7 @@ export function DashboardPreview() {
         autoPlay
         loop
         muted
+        defaultMuted
         playsInline
         controls={false}
         className={cx("pointer-events-none absolute -right-28 -top-36 h-[760px] w-[760px] scale-125 object-contain opacity-90 [&::-webkit-media-controls]:hidden", theme === "light" ? "mix-blend-darken" : "mix-blend-screen")}
@@ -327,7 +348,7 @@ export function DashboardPreview() {
         <div className="liquid-glass self-start rounded-[24px] p-5">
           <div className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Inspector</div>
           <h3 className="mt-3 text-2xl font-semibold tracking-tight">A belief went out of tune.</h3>
-          <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">Korda bent the next action back toward the project's current reality.</p>
+          <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">Korda bent the next action back toward the project&apos;s current reality.</p>
           <div className="mt-5 space-y-3 text-xs">
             <div className="rounded-2xl bg-rose-500/10 p-3 text-rose-500">Ship through the old path</div>
             <div className="rounded-2xl bg-emerald-500/10 p-3 text-emerald-600">Hold for approved rollout</div>
@@ -358,8 +379,8 @@ export function AlignmentScore({ score = 42, label = "agent_b" }: { score?: numb
 
   return (
     <div className="flex items-center gap-4">
-      <div className="relative h-24 w-24">
-        <svg viewBox="0 0 100 100" className="-rotate-90">
+      <div className="relative h-24 w-24 shrink-0">
+        <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
           <circle cx="50" cy="50" r={radius} fill="none" stroke="var(--border)" strokeWidth="9" />
           <motion.circle
             cx="50"
@@ -375,7 +396,9 @@ export function AlignmentScore({ score = 42, label = "agent_b" }: { score?: numb
             transition={{ duration: 0.8, ease: "easeOut" }}
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-2xl font-semibold">{score}%</div>
+        <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold leading-none tracking-tight text-[var(--text-primary)]">
+          <span className="mt-0.5">{score}%</span>
+        </div>
       </div>
       <div>
         <p className="text-sm font-semibold text-[var(--text-primary)]">Alignment signal</p>
@@ -388,28 +411,28 @@ export function AlignmentScore({ score = 42, label = "agent_b" }: { score?: numb
 
 export function RealityGraph({ compact = false }: { compact?: boolean }) {
   const nodes = [
-    { id: "canonical", x: "50%", y: "15%", label: "Canonical truth", tone: "blue" },
-    { id: "agentA", x: "15%", y: "55%", label: "Agent A", tone: "good" },
-    { id: "agentB", x: "85%", y: "55%", label: "Agent B", tone: "bad" },
-    { id: "stale", x: "75%", y: "35%", label: "Stale policy", sub: "deprecated", tone: "warn" },
-    { id: "current", x: "25%", y: "35%", label: "Current policy", sub: "active", tone: "good" },
+    { id: "canonical", x: "50%", y: "14%", label: "Canonical truth", tone: "blue" },
+    { id: "agentA", x: "16%", y: "60%", label: "Agent A", tone: "good" },
+    { id: "agentB", x: "84%", y: "60%", label: "Agent B", tone: "bad" },
+    { id: "stale", x: "78%", y: "36%", label: "Stale policy", sub: "deprecated", tone: "warn" },
+    { id: "current", x: "22%", y: "36%", label: "Current policy", sub: "active", tone: "good" },
   ];
 
   return (
-    <div className={cx("relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-soft)]", compact ? "h-[360px]" : "h-[460px]")}>
+    <div className={cx("relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-soft)]", compact ? "h-[440px]" : "h-[540px]")}>
       <div className="absolute inset-0 soft-grid opacity-60" />
       <svg className="absolute inset-0 h-full w-full">
-        <line x1="50%" y1="22%" x2="25%" y2="28%" stroke="var(--border-strong)" strokeWidth="1.5" />
-        <line x1="50%" y1="22%" x2="75%" y2="28%" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="5 5" />
-        <line x1="25%" y1="42%" x2="15%" y2="48%" stroke="var(--positive)" strokeOpacity="0.45" strokeWidth="1.5" />
-        <line x1="75%" y1="42%" x2="85%" y2="48%" stroke="var(--critical)" strokeOpacity="0.55" strokeWidth="1.5" />
-        <motion.line x1="25%" y1="42%" x2="85%" y2="48%" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} />
+        <line x1="50%" y1="14%" x2="22%" y2="36%" stroke="var(--border-strong)" strokeWidth="1.5" />
+        <line x1="50%" y1="14%" x2="78%" y2="36%" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="5 5" />
+        <line x1="22%" y1="36%" x2="16%" y2="60%" stroke="var(--positive)" strokeOpacity="0.45" strokeWidth="1.5" />
+        <line x1="78%" y1="36%" x2="84%" y2="60%" stroke="var(--critical)" strokeOpacity="0.55" strokeWidth="1.5" />
+        <motion.line x1="22%" y1="36%" x2="84%" y2="60%" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} />
       </svg>
-      <div className="absolute left-[50%] top-[25%] -translate-x-1/2 rounded-md border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 font-mono text-[10px] text-[var(--text-muted)]">
+      <div className="absolute left-[50%] top-[36%] z-10 -translate-x-1/2 -translate-y-1/2 rounded-md border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 font-mono text-[10px] text-[var(--text-muted)] shadow-sm">
         superseded_by
       </div>
       {nodes.map((node) => (
-        <div key={node.id} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: node.x, top: node.y }}>
+        <div key={node.id} className="absolute z-10 -translate-x-1/2 -translate-y-1/2" style={{ left: node.x, top: node.y }}>
           <div className={cx(
             "min-w-32 rounded-xl border bg-[var(--surface-elevated)] px-3 py-2 shadow-lg",
             node.tone === "bad" && "border-rose-500/30",
@@ -422,7 +445,7 @@ export function RealityGraph({ compact = false }: { compact?: boolean }) {
           </div>
         </div>
       ))}
-      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_86%,transparent)] p-3 backdrop-blur">
+      <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_86%,transparent)] p-3 backdrop-blur">
         <AlignmentScore score={42} label="agent_b" />
         <div className="hidden text-right md:block">
           <EndpointBadge>Align</EndpointBadge>

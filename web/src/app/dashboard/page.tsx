@@ -30,26 +30,34 @@ export default function Dashboard() {
 
   return (
     <main data-theme={theme} className="korda-page min-h-screen overflow-hidden text-[var(--text-primary)]">
-      <div className="pointer-events-none fixed -right-40 -top-44 z-0 h-[860px] w-[860px] opacity-80">
-        {theme === "light" && (
-          <div className="absolute left-1/2 top-1/2 h-[60%] w-[60%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black blur-[100px]" />
-        )}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          controls={false}
-          className="h-full w-full scale-125 object-contain mix-blend-screen [&::-webkit-media-controls]:hidden"
-          style={{ 
-            filter: "hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1)", 
-            pointerEvents: "none",
-            WebkitMaskImage: "radial-gradient(closest-side, black 40%, transparent 100%)",
-            maskImage: "radial-gradient(closest-side, black 40%, transparent 100%)"
+      <div className="pointer-events-none fixed -right-40 -top-44 z-0 h-[860px] w-[860px]">
+        <div 
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2"
+          style={{
+            WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 68%)",
+            maskImage: "radial-gradient(circle at center, black 40%, transparent 68%)"
           }}
         >
-          <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
-        </video>
+          <video
+            ref={(el) => { if (el) { el.defaultMuted = true; el.muted = true; } }}
+            autoPlay
+            loop
+            muted
+            playsInline
+            controls={false}
+            disablePictureInPicture
+            disableRemotePlayback
+            className={`h-full w-full object-contain [&::-webkit-media-controls]:hidden ${theme === 'light' ? 'mix-blend-multiply opacity-90' : 'mix-blend-screen opacity-80'}`}
+            style={{ 
+              filter: theme === 'light' 
+                ? 'hue-rotate(-55deg) saturate(250%) brightness(1.2) contrast(1.1) invert(1) hue-rotate(180deg)' 
+                : 'saturate(200%) brightness(1.1) contrast(1.1)' 
+            }}
+          >
+            <source src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" type="video/webm" />
+            <source src="https://future.co/images/homepage/glassy-orb/orb-purple.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 py-6 md:px-8">

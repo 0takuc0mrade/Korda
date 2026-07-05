@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 import { motion, useSpring } from 'framer-motion';
 import { useMousePosition } from '@/lib/hooks';

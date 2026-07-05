@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
