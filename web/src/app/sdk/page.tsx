@@ -8,6 +8,8 @@ import {
   ThemeName,
 } from "@/components/korda-product";
 
+const npmSnippet = `npm i @korda/sdk`;
+
 const installSnippet = `import { KordaClient } from "@korda/sdk";
 
 const korda = new KordaClient({
@@ -87,6 +89,7 @@ export default function SdkPage() {
               The SDK wraps Korda’s live backend endpoints. It is intentionally small so teams can drop it into existing agent runners without adopting a new framework.
             </p>
             <div className="mt-6 space-y-5">
+              <CodeBlock>{npmSnippet}</CodeBlock>
               <CodeBlock>{installSnippet}</CodeBlock>
               <CodeBlock>{interceptSnippet}</CodeBlock>
             </div>
