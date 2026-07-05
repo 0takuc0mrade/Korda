@@ -12,12 +12,12 @@ export type KordaRequestMeta = {
 export type DecisionUpdate = {
     type?: "decision_update" | "api_update";
     session_id: string;
-    context_type?: string;
+    context_type?: string | undefined;
     old_node_id: string;
-    old_description?: string;
+    old_description?: string | undefined;
     new_node_id: string;
-    new_description?: string;
-    update_reason?: string;
+    new_description?: string | undefined;
+    update_reason?: string | undefined;
 };
 export type AlignmentResponse = JsonObject & {
     ok?: boolean;
@@ -41,13 +41,13 @@ export type InterceptResponse = JsonObject & {
 };
 export type ReconcilePayload = {
     agent_session_id: string;
-    canonical_session_id?: string;
+    canonical_session_id?: string | undefined;
     consensus_node_id: string;
-    supersedes_node_id?: string;
-    purge_node_id?: string;
-    context_type?: string;
+    supersedes_node_id?: string | undefined;
+    purge_node_id?: string | undefined;
+    context_type?: string | undefined;
     reconciled_context: string;
-    resolution_reason?: string;
+    resolution_reason?: string | undefined;
 };
 export type ReconcileResponse = JsonObject & {
     ok?: boolean;
@@ -84,8 +84,8 @@ export declare class KordaClient {
     health(): Promise<HealthResponse>;
     rememberDecision(payload: DecisionUpdate): Promise<JsonObject>;
     align(agentSessionId: string, query: string, options?: {
-        canonicalSessionId?: string;
-        divergenceThreshold?: number;
+        canonicalSessionId?: string | undefined;
+        divergenceThreshold?: number | undefined;
     }): Promise<AlignmentResponse>;
     intercept(prompt: string, agentSessionId?: string, canonicalSessionId?: string): Promise<InterceptResponse>;
     reconcile(payload: ReconcilePayload): Promise<ReconcileResponse>;

@@ -56,12 +56,12 @@ export default function SdkPage() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <main data-theme={theme} className="korda-page min-h-screen text-[var(--text-primary)]">
+    <main data-theme={theme} className="korda-page min-h-screen overflow-x-hidden text-[var(--text-primary)]">
       <GlassNavbar theme={theme} setTheme={setTheme} />
       <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="max-w-4xl">
           <StatusBadge tone="blue">SDK integration</StatusBadge>
-          <h1 className="mt-5 text-5xl font-semibold tracking-tight md:text-6xl">Put Korda in the agent loop.</h1>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">Put Korda in the agent loop.</h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--text-secondary)]">
             Korda should be used where agent intent turns into action: before model calls, code generation, tool execution, runbooks, and release workflows.
           </p>
@@ -80,7 +80,7 @@ export default function SdkPage() {
             ))}
           </div>
 
-          <div className="liquid-glass rounded-[28px] p-6">
+          <div className="liquid-glass min-w-0 rounded-[28px] p-6">
             <div className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">TypeScript client</div>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight">Current SDK surface</h2>
             <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
@@ -94,7 +94,7 @@ export default function SdkPage() {
         </div>
 
         <section className="mt-10 grid gap-6 lg:grid-cols-2">
-          <div className="liquid-glass rounded-[28px] p-6">
+          <div className="liquid-glass min-w-0 rounded-[28px] p-6">
             <div className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Memory writes</div>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight">Keep canonical and agent sessions separate.</h2>
             <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">

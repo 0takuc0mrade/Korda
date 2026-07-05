@@ -68,6 +68,24 @@ Click **Reconcile**. Show the reconciliation receipt and the method used (forget
 
 Click **Verify recall**. Show the alignment score returning to a healthy range.
 
+## Terminal Simulation (60 seconds)
+
+> "To see what this looks like in an active multi-agent pipeline, let's drop into the terminal. We've built an end-to-end CLI simulation that integrates a live LLM."
+
+Switch your screen to the **terminal**. Run `npx tsx demo.ts 0`.
+
+> "Here we have a Database Migration scenario. Agent A records the canonical truth: we moved to Postgres 16. But Agent B is stuck in the past, believing we use MySQL 5.7."
+
+Point out Korda detecting the drift (0% alignment).
+
+> "Without Korda, Agent B asks the LLM for a database snippet using its stale context, and the LLM hallucinates MySQL code."
+>
+> "But *with* Korda in the loop, the prompt is intercepted before it reaches the model."
+
+Show the CLI output where the prompt is hardened and the LLM generates the correct Postgres 16 code.
+
+> "Korda injects the guardrail automatically. Finally, Korda reconciles Agent B's memory, deleting the MySQL belief, so the agent never makes that mistake again."
+
 ## Evidence and Summary (20 seconds)
 
 > "Every step generates a receipt with the exact endpoint, status code, and timestamp. You can expand the Run Evidence panel to see the full audit trail."
