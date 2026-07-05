@@ -285,10 +285,10 @@ export function DashboardPreview() {
   return (
     <div className="liquid-glass relative min-h-[720px] overflow-hidden rounded-[32px] p-5 shadow-[0_40px_140px_rgba(49,154,255,0.18)]">
       <video
+        ref={(el) => { if (el) { el.defaultMuted = true; el.muted = true; } }}
         autoPlay
         loop
         muted
-        defaultMuted
         playsInline
         controls={false}
         className={cx("pointer-events-none absolute -right-28 -top-36 h-[760px] w-[760px] scale-125 object-contain opacity-90 [&::-webkit-media-controls]:hidden", theme === "light" ? "mix-blend-darken" : "mix-blend-screen")}
