@@ -35,6 +35,7 @@ import { KordaClient } from "@korda/sdk";
 
 const korda = new KordaClient({
   baseUrl: process.env.KORDA_BACKEND_URL!,
+  // or: baseUrl: "https://korda.onrender.com"
 });
 
 async function runAgent(prompt: string) {
@@ -53,7 +54,7 @@ For teams that want full control over the drift lifecycle:
 ```ts
 import { KordaClient } from "@korda/sdk";
 
-const korda = new KordaClient({ baseUrl: "http://localhost:8000" });
+const korda = new KordaClient({ baseUrl: "https://korda.onrender.com" });
 
 // 1. Record a project decision (e.g. a human or lead agent updates the truth)
 await korda.rememberDecision({
@@ -192,13 +193,13 @@ npm install -g @korda/sdk
 
 | Flag | Description |
 |---|---|
-| `--backend <url>` | Korda backend URL (default: `$KORDA_BACKEND_URL` or `http://localhost:8000`) |
+| `--backend <url>` | Korda backend URL (default: `$KORDA_BACKEND_URL` or `https://korda.onrender.com`) |
 
 ### Examples
 
 ```bash
 # Quick health check
-korda health --backend http://localhost:8000
+korda health --backend https://korda.onrender.com
 
 # Check if an agent is drifted
 korda align agent_b --query "What database do we use?"
@@ -239,7 +240,7 @@ If the `@korda` npm scope is not available to your npm account, rename the packa
 ## Runtime Requirements
 
 - Node.js 18+ or any runtime with `fetch`.
-- A running Korda backend URL.
+- A running Korda backend. The public deployment is at `https://korda.onrender.com`.
 - Backend Cognee credentials configured server-side.
 
 The SDK does not talk directly to Cognee Cloud. It calls your Korda backend, which owns session memory, drift scoring, prompt correction, reconciliation, and recall verification.

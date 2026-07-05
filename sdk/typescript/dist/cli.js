@@ -40,7 +40,7 @@ function parseArgs(argv) {
 function getBackendUrl(flags) {
     return (flags["backend"] ??
         process.env["KORDA_BACKEND_URL"] ??
-        "http://localhost:8000");
+        "https://korda.onrender.com");
 }
 function createClient(flags) {
     return new KordaClient({ baseUrl: getBackendUrl(flags) });
@@ -199,7 +199,7 @@ ${c.bold}Commands:${c.reset}
                                     Reconcile agent memory with truth
 
 ${c.bold}Global Options:${c.reset}
-  ${c.cyan}--backend${c.reset} <url>                  Korda backend URL ${c.dim}(default: $KORDA_BACKEND_URL or http://localhost:8000)${c.reset}
+  ${c.cyan}--backend${c.reset} <url>                  Korda backend URL ${c.dim}(default: $KORDA_BACKEND_URL or https://korda.onrender.com)${c.reset}
 
 ${c.bold}Align Options:${c.reset}
   ${c.cyan}--query${c.reset} "..."                    Custom alignment query
@@ -212,7 +212,7 @@ ${c.bold}Intercept / Protect Options:${c.reset}
 
 ${c.bold}Examples:${c.reset}
   ${c.dim}# Quick health check${c.reset}
-  korda health --backend http://localhost:8000
+  korda health --backend https://korda.onrender.com
 
   ${c.dim}# Check if an agent is drifted${c.reset}
   korda align agent_b --query "What database do we use?"
@@ -264,7 +264,7 @@ async function main() {
             case "version":
             case "--version":
             case "-v":
-                console.log("@korda/sdk 0.1.0");
+                console.log("@korda/sdk 0.1.1");
                 break;
             default:
                 console.error(`${c.red}Unknown command: ${command}${c.reset}\n`);

@@ -1,18 +1,18 @@
 {
   "name": "@korda/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript SDK for Korda, a shared reality engine for AI agents.",
   "type": "module",
   "license": "MIT",
   "author": "Korda",
-  "homepage": "https://github.com/korda-ai/korda#readme",
+  "homepage": "https://github.com/0takuc0mrade/Korda#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/korda-ai/korda.git",
+    "url": "git+https://github.com/0takuc0mrade/Korda.git",
     "directory": "sdk/typescript"
   },
   "bugs": {
-    "url": "https://github.com/korda-ai/korda/issues"
+    "url": "https://github.com/0takuc0mrade/Korda/issues"
   },
   "keywords": [
     "ai-agents",
@@ -29,7 +29,7 @@
     "LICENSE"
   ],
   "bin": {
-    "korda": "./dist/cli.js"
+    "korda": "dist/cli.js"
   },
   "exports": {
     ".": {
